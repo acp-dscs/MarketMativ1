@@ -14,7 +14,7 @@ This Webb App aims to asist in your learning and understanding of current and hi
 The program has been developed with a fully operational ETL data pipeline.
 
 ## Data Flow Diagram
-![Alt text](https://raw.githubusercontent.com/acp-dscs/MarketMativ1/main/assets/DataFlow.png)
+![Alt text](https://raw.githubusercontent.com/acp-dscs/MarketMativ1/main/assets/DataFlow1.png)
 
 ## Key Processes
 

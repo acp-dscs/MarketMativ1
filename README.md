@@ -1,7 +1,7 @@
 # Capstone Project (Data Engineering) - MarketMati
 
 # Welcome to MarketMati
-![Alt text](https://raw.githubusercontent.com/acp-dscs/MarketMati/main/MMEYE.png)
+![Alt text](https://raw.githubusercontent.com/acp-dscs/MarketMativ1/main/assets/MMEYE.png)
 - 👋 Hi there, this Web App will help you keep a sharp eye on the Digital Assets market!
 
 ## Description
@@ -40,7 +40,7 @@ The program has been developed with a fully operational ETL data pipeline.
    $ streamlit run streamlit_app.py
    ```
 
-![Alt text](https://raw.githubusercontent.com/acp-dscs/MarketMati/main/MarketMati.png)
+![Alt text](https://raw.githubusercontent.com/acp-dscs/MarketMativ1/main/assets/MarketMati.png)
 
 <!---
 acp-dscs/acp-dscs is a ✨ special ✨ repository because its `README.md` (this file) appears on my GitHub profile.

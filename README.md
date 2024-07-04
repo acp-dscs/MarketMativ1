@@ -1,7 +1,7 @@
 # Capstone Project (Data Engineering) - MarketMati
 
-# Welcome to MarketMati
 ![Alt text](https://raw.githubusercontent.com/acp-dscs/MarketMativ1/main/assets/MMEYE.png)
+# Welcome to MarketMati
 - 👋 Hi there, this Web App will help you keep a sharp eye on the Digital Assets market!
 
 ## Description

@@ -46,7 +46,6 @@ mme_url = 'https://raw.githubusercontent.com/acp-dscs/MarketMati/main/MMEYE.png'
 st.image(mme_url, use_column_width=True)
 
 # For Streamlit .TOML secrets file this replaces the .env method
-marketmati = st.secrets['MARKETMATI']
 host = st.secrets['HOST']
 sql_password = st.secrets['SQL_PASSWORD']
 db_user = st.secrets['DB_USER']

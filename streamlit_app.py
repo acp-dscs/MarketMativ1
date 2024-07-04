@@ -42,7 +42,7 @@ crypto_dict = {crypto['ticker']: crypto for crypto in crypto_data}
 
 # MarketMati Streamlit Program Main Code
 # Import and display logo MarketMati images from GitHub URL
-mme_url = 'https://raw.githubusercontent.com/acp-dscs/MarketMati/main/MMEYE.png'
+mme_url = 'https://raw.githubusercontent.com/acp-dscs/MarketMativ1/main/assets/MMEYE.png'
 st.image(mme_url, use_column_width=True)
 
 # For Streamlit .TOML secrets file this replaces the .env method
@@ -203,7 +203,7 @@ if st.checkbox('Expand Monthly Percentages Data', key='checkbox_raw_monthly_last
     st.write(monthly_last_rows)
 
 # Import and display logo MarketMati images from GitHub URL
-mmf_url = 'https://raw.githubusercontent.com/acp-dscs/MarketMati/main/MarketMati.png'
+mmf_url = 'https://raw.githubusercontent.com/acp-dscs/MarketMativ1/main/assets/MarketMati.png'
 st.image(mmf_url, use_column_width=True)
 # Disclaimer
 st.title('')

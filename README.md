@@ -7,19 +7,29 @@
 ## Description
 
 📈 Digital Assets Current & Historical Prices
-💹 Forecasting and Pi Cycle Analysis
+💹 Pi Cycle Analysis
 
 With a focus on data visualisations through chart analysis.
 This Webb App aims to asist in your learning and understanding of current and historical market prices.
 The program has been developed with a fully operational ETL data pipeline.
 
--     Data Extraction: Financial Historical and Current Data from the Yfinance API https://uk.finance.yahoo.com/
--     Data Extraction: Data is then stored in DBeaver Pagila SQL database tables.
--     Data Extraction: Data is updated via automated CRON Jobs for Current Prices every 15mins and Day Close Prices once a day.
--     Data Transformation: Using Python and SQL, data tables are queried.
--     Data Transformation: Any transformation, column renaming, dropping of data, sorting etc.
--     Data Load: Transformed and updated data is now used to create user visualisations.
--     Data Load: The Web App is hosted with Streamlit. https://streamlit.io/
+## Data Flow Diagram
+![Alt text](https://raw.githubusercontent.com/acp-dscs/MarketMativ1/main/assets/DataFlow.png)
+
+## Key Processes
+
+### Data Extraction
+-     Financial Historical and Current Data from the Yfinance API.
+-     https://pypi.org/project/yfinance/ 
+-     Data is then stored in DBeaver Pagila SQL database tables.
+-     Data is updated via automated CRON Jobs.
+-     Current Prices every 15mins and Day Close Prices once a day.
+### Data Transformation
+-     Using Python and SQL, data tables are queried.
+-     Any transformation, column renaming, dropping of data, sorting etc.
+### Data Load
+-     Transformed and updated data is now used to create user visualisations.
+-     The Web App is hosted with Streamlit. https://streamlit.io/
 
 📫 How to reach me at:
 -     MarketMati GitHub Repo:    https://marketmativ1.streamlit.app/
@@ -30,7 +40,6 @@ The program has been developed with a fully operational ETL data pipeline.
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://data-evaluation-template.streamlit.app/)
 
 ### How to run on your own machine
-
 1. Install the requirements
    ```
    $ pip install -r requirements.txt

@@ -7,10 +7,10 @@
 ## Description
 
 📈 Digital Assets Current & Historical Prices
-💹 Pi Cycle Analysis
+💹 Pi Cycle Analysis, Forecasting only in Test Environment, not the Live Web App.
 
 With a focus on data visualisations through chart analysis.
-This Webb App aims to asist in your learning and understanding of current and historical market prices.
+This Webb App aims to assist in your learning and understanding of current and historical market prices.
 The program has been developed with a fully operational ETL data pipeline.
 
 ## Data Flow Diagram
@@ -32,8 +32,8 @@ The program has been developed with a fully operational ETL data pipeline.
 -     The Web App is hosted with Streamlit. https://streamlit.io/
 
 📫 How to reach me at:
--     MarketMati GitHub Repo:    https://marketmativ1.streamlit.app/
--     MarketMati GitHub Repo:    https://github.com/acp-dscs/MarketMati
+-     Wed App:                   https://marketmativ1.streamlit.app/
+-     MarketMati GitHub Repo:    https://github.com/acp-dscs/MarketMativ1
 -     Website:                   https://anthonypieri.com/
 -     LinkedIn:                  https://www.linkedin.com/in/anthonypieri/
 

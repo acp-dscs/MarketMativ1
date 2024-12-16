@@ -9,6 +9,9 @@ crypto_data = [
     {"ticker": "BTC-USD", "name": "Bitcoin", "max_supply": "21,000,000",
      "description": "Often referred to as Digital Gold. A pioneer crypto using blockchain for decentralised digital currency without intermediaries.",
      "image": "https://assets.coingecko.com/coins/images/1/standard/bitcoin.png?1696501400"},
+     {"ticker": "MSTR", "name": "MicroStrategy", "max_supply": "Infinite",
+     "description": "Bitcoin Treasury Company (BTC) In August 2020, MicroStrategy became the first publicly traded US company to acquire and hold bitcoin on its balance sheet as a primary treasury reserve asset. ",
+     "image": "https://raw.githubusercontent.com/acp-dscs/MarketMativ1/main/assets/MSTR.png"},
     {"ticker": "ETH-USD", "name": "Ethereum", "max_supply": "Infinite",
      "description": "Proof-of-Stake blockchain for dApps, scaling with Layer 2 solutions.",
      "image": "https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628"},
@@ -34,7 +37,7 @@ crypto_data = [
      "description": "The first well-structured, easy-to-use platform for Ethereum scaling.",
      "image": "https://assets.coingecko.com/coins/images/4713/standard/polygon.png?1698233745"},
     {"ticker": "ZEC-USD", "name": "Zcash", "max_supply": "21,000,000",
-     "description": "Privacy-focused fork of the Bitcoin blockchain, enables public and private transactions.",
+     "description": "Zcash (ZEC), based on Bitcoin's codebase, uses zk-SNARKs to offer optional anonymity through shielded transactions. As the first major application of this zero-knowledge cryptography, Zcash ensures privacy by encrypting shielded transactions while still validating them under network rules.",
      "image": "https://assets.coingecko.com/coins/images/486/standard/circle-zcash-color.png?1696501740"}
 ]
 crypto_dict = {crypto['ticker']: crypto for crypto in crypto_data}
@@ -51,7 +54,7 @@ def fetch_yf_data(tickers, start_date, end_date):
     return data
 
 # Current Prices Table
-st.markdown('<h1 style="color: green;">Live Prices</h1>', unsafe_allow_html=True)
+st.markdown('<h1 style="color: green;">Live Prices - Select Assets</h1>', unsafe_allow_html=True)
 st.write('Accurate to the latest market data')
 
 # Fetch live prices
@@ -59,21 +62,16 @@ def fetch_live_prices(tickers):
     live_data = []
     for ticker in tickers:
         ticker_data = yf.Ticker(ticker)
-        live_price = ticker_data.history(period="1d")['Close'].iloc[-1]
-        live_data.append({"ticker": ticker, "current_price": live_price})
+        hist_data = ticker_data.history(period="1d")
+        if not hist_data.empty and 'Close' in hist_data.columns:
+            live_price = hist_data['Close'].iloc[-1]
+            live_data.append({"ticker": ticker, "current_price": live_price})
+        else:
+            live_data.append({"ticker": ticker, "current_price": None})  # Handle missing data gracefully
     return pd.DataFrame(live_data)
 
 live_prices = fetch_live_prices([crypto['ticker'] for crypto in crypto_data])
 st.dataframe(live_prices.rename(columns={"ticker": "Digital Asset", "current_price": "Price USD"}), hide_index=True)
-
-# Previous Day Prices Table
-st.markdown('<h1 style="color: green;">Previous Day Market Prices USD</h1>', unsafe_allow_html=True)
-yesterday = date.today() - timedelta(days=1)
-st.write(f'Updated daily, end of day prices for {yesterday}')
-end_date = yesterday.strftime('%Y-%m-%d')
-start_date = (yesterday - timedelta(days=1)).strftime('%Y-%m-%d')
-previous_day_data = fetch_yf_data([crypto['ticker'] for crypto in crypto_data], start_date, end_date)
-st.dataframe(previous_day_data.rename(columns={"ticker": "Digital Asset", "close_price": "Price USD"}), hide_index=True)
 
 # Interactive Section for User
 st.markdown('<h1 style="color: green;">Cryptocurrency Deep Dive</h1>', unsafe_allow_html=True)
@@ -86,7 +84,7 @@ st.write(f"Max Supply: {selected_crypto['max_supply']}")
 st.text(selected_crypto['description'])
 
 # Fetch historical data
-historical_data = fetch_yf_data([selected_ticker], "2018-01-01", date.today().strftime('%Y-%m-%d'))
+historical_data = fetch_yf_data([selected_ticker], "2010-01-01", date.today().strftime('%Y-%m-%d'))
 historical_data = historical_data[historical_data['ticker'] == selected_ticker]
 historical_data['111SMA'] = historical_data['close_price'].rolling(window=111, min_periods=1).mean()
 historical_data['350SMA'] = historical_data['close_price'].rolling(window=350, min_periods=1).mean()
@@ -146,6 +144,61 @@ if selected_ticker:
 # Allow user to view underlying data
 if st.checkbox('Expand Monthly Percentages Data', key='checkbox_raw_monthly_last_rows'):
     st.write(monthly_last_rows)
+
+# --- Add Annual Candlestick Section ---
+# Hardcoded data for Bitcoin from 2008 to 2013
+hardcoded_btc_data = {
+    'Year': [2008, 2009, 2010, 2011, 2012, 2013],
+    'Year Open': [0.001, 0.39, 0.10, 0.30, 5.27, 13.30],
+    'Year High': [0.39, 1.00, 0.39, 31.91, 13.70, 1156.00],
+    'Year Low': [0.001, 0.01, 0.06, 2.05, 4.41, 13.30],
+    'Year Close': [0.39, 0.10, 0.30, 4.70, 13.30, 755.00],
+    'Digital Asset': ['BTC-USD'] * 6
+}
+
+# Convert hardcoded data into a DataFrame for Bitcoin
+btc_data_df = pd.DataFrame(hardcoded_btc_data)
+
+# Fetch annual candlestick data for the selected crypto
+def fetch_annual_candles(tickers, start_date="2010-01-01"):
+    annual_data = []
+    for ticker in tickers:
+        ticker_data = yf.Ticker(ticker)  # Fetch data from Yahoo Finance
+        history = ticker_data.history(start=start_date, interval="1mo")  # Fetch monthly data from start date
+        history.reset_index(inplace=True)
+        history['Year'] = history['Date'].dt.year  # Extract year from Date
+        yearly_summary = history.groupby('Year').agg(
+            Open=('Open', 'first'),
+            High=('High', 'max'),
+            Low=('Low', 'min'),
+            Close=('Close', 'last')
+        ).reset_index()
+        yearly_summary['ticker'] = ticker
+        annual_data.append(yearly_summary)
+    return pd.concat(annual_data, ignore_index=True)
+
+# Fetch annual candlestick data for the selected tickers
+tickers = [selected_ticker]  # Only show the selected ticker in the interactive section
+annual_candles_data = fetch_annual_candles(tickers, start_date="2014-01-01")
+
+# Rename and display the dataframe with relevant columns
+annual_candles_data.rename(columns={
+    'ticker': 'Digital Asset',
+    'Open': 'Year Open',
+    'High': 'Year High',
+    'Low': 'Year Low',
+    'Close': 'Year Close'
+}, inplace=True)
+
+# Combine the hardcoded BTC data with the fetched data only if the selected ticker is BTC-USD
+if selected_ticker == 'BTC-USD':
+    combined_data = pd.concat([btc_data_df, annual_candles_data], ignore_index=True)
+else:
+    combined_data = annual_candles_data
+
+# Show the full table with the annual candlestick data
+st.markdown('<h2 style="color: green;">Annual Data</h2>', unsafe_allow_html=True)
+st.dataframe(combined_data, hide_index=True)
 
 # Import and display logo MarketMati images from GitHub URL
 mmf_url = 'https://raw.githubusercontent.com/acp-dscs/MarketMativ1/main/assets/MarketMati.png'
